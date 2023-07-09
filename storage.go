@@ -23,16 +23,19 @@ const (
 
 func (c *Client) UploadOrUpdateFile(bucketId string, relativePath string, data io.Reader, update bool) FileUploadResponse {
 	c.clientTransport.header.Set("cache-control", defaultFileCacheControl)
-	c.clientTransport.header.Set("content-type", defaultFileContentType)
+	var mimetype string
+	filedata, err := ioutil.ReadAll(data)
+	if err != nil {
+		panic(err)
+	}
+	mimetype = http.DetectContentType(filedata)
+	c.clientTransport.header.Set("content-type", mimetype)
 	c.clientTransport.header.Set("x-upsert", strconv.FormatBool(defaultFileUpsert))
 
 	body := bufio.NewReader(data)
 	_path := removeEmptyFolderName(bucketId + "/" + relativePath)
 
-	var (
-		res *http.Response
-		err error
-	)
+	var res *http.Response
 
 	if update {
 		var request *http.Request

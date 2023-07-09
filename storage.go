@@ -44,7 +44,7 @@ func (c *Client) UploadOrUpdateFile(bucketId string, relativePath string, data i
 	} else {
 		res, err = c.session.Post(
 			c.clientTransport.baseUrl.String()+"/object/"+_path,
-			defaultFileContentType,
+			mimetype,
 			body)
 	}
 	if err != nil {

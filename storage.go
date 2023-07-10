@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -42,10 +43,12 @@ func (c *Client) UploadOrUpdateFile(bucketId string, relativePath string, data i
 		request, err = http.NewRequest(http.MethodPut, c.clientTransport.baseUrl.String()+"/object/"+_path, body)
 		res, err = c.session.Do(request)
 	} else {
+		fmt.Println(mimetype)
 		res, err = c.session.Post(
 			c.clientTransport.baseUrl.String()+"/object/"+_path,
 			mimetype,
 			body)
+		fmt.Println(res.Status)
 	}
 	if err != nil {
 		panic(err)

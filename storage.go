@@ -16,10 +16,10 @@ const (
 	defaultLimit            = 100
 	defaultOffset           = 0
 	defaultFileCacheControl = "3600"
-	defaultFileContentType  = "text/plain;charset=UTF-8"
-	defaultFileUpsert       = false
-	defaultSortColumn       = "name"
-	defaultSortOrder        = "asc"
+	//defaultFileContentType  = "text/plain;charset=UTF-8"
+	defaultFileUpsert = false
+	defaultSortColumn = "name"
+	defaultSortOrder  = "asc"
 )
 
 func (c *Client) UploadOrUpdateFile(bucketId string, relativePath string, data io.Reader, update bool) FileUploadResponse {

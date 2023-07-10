@@ -1,6 +1,7 @@
 package storage_go
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -32,8 +33,8 @@ func (c *Client) UploadOrUpdateFile(bucketId string, relativePath string, data i
 	c.clientTransport.header.Set("content-type", mimetype)
 	c.clientTransport.header.Set("x-upsert", strconv.FormatBool(defaultFileUpsert))
 
-	//body := bufio.NewReader(data)
-	body := data
+	body := bufio.NewReader(data)
+
 	_path := removeEmptyFolderName(bucketId + "/" + relativePath)
 
 	var res *http.Response
